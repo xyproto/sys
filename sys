@@ -17,129 +17,129 @@ function two {
 }
 
 function service_fun() {
-    CMD=/usr/bin/sudo /sbin/service
-    CCG=/usr/bin/sudo /sbin/chkconfig
+    CMD="/sbin/service"
+    CCG="/sbin/chkconfig"
     if [[ "$1" == "stop" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "start" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "restart" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "reload" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "condrestart" ]]; then
-        two "$@"
-        "$CMD" "$2" "$1"
+        two "$@" || echo >> failed.txt
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "status" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "on" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "off" ]]; then
         two "$@"
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "is-enabled" ]]; then
         two "$@"
-        "$CCG" "$2"
+        sudo "$CCG" "$2"
     elif [[ "$1" == "daemon-reload" ]]; then
         two "$@"
-        "$CMD" "$2" --add
+        sudo "$CMD" "$2" --add
     elif [[ "$2" == "enable" ]]; then
-	"$CMD" "$1" on
+	sudo "$CMD" "$1" on
     elif [[ "$2" == "disable" ]]; then
-	"$CMD" "$1" off
+	sudo "$CMD" "$1" off
     elif [[ "$1" == "list-unit-files" ]]; then
-	"$CCG" --list
+	sudo "$CCG" --list
     elif [[ "$1" == "list" ]]; then
-	"$CCG" --list
+	sudo "$CCG" --list
     elif [[ "$1" == "available" ]]; then
-	"$CCG" --list
+	sudo "$CCG" --list
     elif [[ "$1" == "--add" ]]; then
         two "$@"
-	"$CCG" --add "$2"
+	sudo "$CCG" --add "$2"
     elif [[ "$1" == "add" ]]; then
         two "$@"
-	"$CCG" --add "$2"
+	sudo "$CCG" --add "$2"
     elif [[ "$1" == "on" ]]; then
         two "$@"
-	"$CMD" "$2" on
+	sudo "$CMD" "$2" on
     elif [[ "$1" == "off" ]]; then
         two "$@"
-	"$CMD" "$2" off
+	sudo "$CMD" "$2" off
     elif [[ "$2" == "list-unit-files" ]]; then
-	"$CCG" --list
+	sudo "$CCG" --list
     elif [[ "$2" == "list" ]]; then
-	"$CCG" --list
+	sudo "$CCG" --list
     elif [[ "$2" == "available" ]]; then
-	"$CCG" --list
+	sudo "$CCG" --list
     elif [[ "$2" == "daemon-reload" ]]; then
-	"$CCG" --add "$1"
+	sudo "$CCG" --add "$1"
     elif [[ "$2" == "daemon-reload" ]]; then
-	"$CCG" -add "$1"
+	sudo "$CCG" -add "$1"
     else
-	"$CMD" $*
+	sudo "$CMD" $*
     fi
 }
 
 function systemd_fun() {
-    CMD=/usr/bin/sudo /usr/bin/systemctl
+    CMD="/usr/bin/systemctl"
     if [[ "$2" == "stop" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "start" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "restart" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "reload" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "condrestart" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "status" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "enable" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "disable" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "is-enabled" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "daemon-reload" ]]; then
-        "$CMD" "$2" "$1"
+        sudo "$CMD" "$2" "$1"
     elif [[ "$1" == "on" ]]; then
         two "$@"
-	"$CMD" enable "$2"
+	sudo "$CMD" enable "$2"
     elif [[ "$1" == "off" ]]; then
         two "$@"
-	"$CMD" disable "$2"
+	sudo "$CMD" disable "$2"
     elif [[ "$1" == "--list" ]]; then
-	"$CMD" list-unit-files --type=service
+	sudo "$CMD" list-unit-files --type=service
     elif [[ "$1" == "list" ]]; then
-	"$CMD" list-unit-files --type=service
+	sudo "$CMD" list-unit-files --type=service
     elif [[ "$1" == "available" ]]; then
-	"$CMD" list-unit-files --type=service
+	sudo "$CMD" list-unit-files --type=service
     elif [[ "$1" == "--add" ]]; then
-	"$CMD" daemon-reload
+	sudo "$CMD" daemon-reload
     elif [[ "$1" == "add" ]]; then
-	"$CMD" daemon-reload
+	sudo "$CMD" daemon-reload
     elif [[ "$2" == "on" ]]; then
-	"$CMD" enable "$1"
+	sudo "$CMD" enable "$1"
     elif [[ "$2" == "off" ]]; then
-	"$CMD" disable "$1"
+	sudo "$CMD" disable "$1"
     elif [[ "$2" == "--list" ]]; then
-	"$CMD" list-unit-files --type=service
+	sudo "$CMD" list-unit-files --type=service
     elif [[ "$2" == "list" ]]; then
-	"$CMD" list-unit-files --type=service
+	sudo "$CMD" list-unit-files --type=service
     elif [[ "$2" == "available" ]]; then
-	"$CMD" list-unit-files --type=service
+	sudo "$CMD" list-unit-files --type=service
     elif [[ "$2" == "--add" ]]; then
-	"$CMD" daemon-reload
+	sudo "$CMD" daemon-reload
     elif [[ "$2" == "add" ]]; then
-	"$CMD" daemon-reload
+	sudo "$CMD" daemon-reload
     else
-	"$CMD" $*
+	sudo "$CMD" $*
     fi
 }
 
