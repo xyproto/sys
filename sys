@@ -17,8 +17,8 @@ function two {
 }
 
 function service_fun() {
-    CMD="/sbin/service"
-    CCG="/sbin/chkconfig"
+    CMD=/sbin/service
+    CCG=/sbin/chkconfig
     if [[ "$1" == "stop" ]]; then
         two "$@"
         sudo "$CMD" "$2" "$1"
@@ -87,7 +87,7 @@ function service_fun() {
 }
 
 function systemd_fun() {
-    CMD="/usr/bin/systemctl"
+    CMD=/usr/bin/systemctl
     if [[ "$2" == "stop" ]]; then
         sudo "$CMD" "$2" "$1"
     elif [[ "$2" == "start" ]]; then
@@ -117,6 +117,7 @@ function systemd_fun() {
     elif [[ "$1" == "--list" ]]; then
 	sudo "$CMD" list-unit-files --type=service
     elif [[ "$1" == "list" ]]; then
+	echo sudo "$CMD" list-unit-files --type=service
 	sudo "$CMD" list-unit-files --type=service
     elif [[ "$1" == "available" ]]; then
 	sudo "$CMD" list-unit-files --type=service
@@ -148,8 +149,8 @@ if [[ -z $1 ]]; then
 fi
 
 if [[ -e /sbin/service ]]; then
-    service_fun $*
+    service_fun $@
 elif [[ -e /usr/bin/systemctl ]]; then
-    systemd_fun $*
+    systemd_fun $@
 fi
 
