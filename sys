@@ -9,7 +9,7 @@
 #
 # TODO: Use case/esac instead of if/elif/else
 
-function two() {
+function two {
     if [[ "$2" == "" ]]; then
         echo 'Two arguments are needed'
         exit 1
@@ -82,7 +82,7 @@ function service_fun() {
     elif [[ "$2" == "daemon-reload" ]]; then
 	"$CCG" -add "$1"
     else
-	"$CMD" "$@"
+	"$CMD" $*
     fi
 }
 
@@ -139,9 +139,11 @@ function systemd_fun() {
     elif [[ "$2" == "add" ]]; then
 	"$CMD" daemon-reload
     else
-	"$CMD" "$@"
+	"$CMD" $*
     fi
 }
+
+echo $0 $1 $2 $3 $4
 
 if [[ -e /sbin/service ]]; then
     service_fun $*
