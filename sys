@@ -144,8 +144,8 @@ function systemd_fun() {
 }
 
 if [[ -e /sbin/service ]]; then
-    service_fun "$@"
+    service_fun $*
 elif [[ -e /usr/bin/systemctl ]]; then
-  systemd_fun "$@"
+    systemd_fun $*
 fi
 
