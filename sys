@@ -16,7 +16,7 @@ function two() {
     fi
 }
 
-function service() {
+function service_fun() {
     CMD=/sbin/service
     CCG=/sbin/chkconfig
     if [[ "$1" == "stop" ]]; then
@@ -86,7 +86,7 @@ function service() {
     fi
 }
 
-function systemd() {
+function systemd_fun() {
     CMD=/usr/bin/systemctl
     if [[ "$2" == "stop" ]]; then
         "$CMD" "$2" "$1"
@@ -115,37 +115,37 @@ function systemd() {
         two "$@"
 	"$CMD" disable "$2"
     elif [[ "$1" == "--list" ]]; then
-	"$CDM" list-unit-files --type==service
+	"$CMD" list-unit-files --type=service
     elif [[ "$1" == "list" ]]; then
-	"$CDM" list-unit-files --type==service
+	"$CMD" list-unit-files --type=service
     elif [[ "$1" == "available" ]]; then
-	"$CDM" list-unit-files --type==service
+	"$CMD" list-unit-files --type=service
     elif [[ "$1" == "--add" ]]; then
-	"$CDM" daemon-reload
+	"$CMD" daemon-reload
     elif [[ "$1" == "add" ]]; then
-	"$CDM" daemon-reload
+	"$CMD" daemon-reload
     elif [[ "$2" == "on" ]]; then
 	"$CMD" enable "$1"
     elif [[ "$2" == "off" ]]; then
 	"$CMD" disable "$1"
     elif [[ "$2" == "--list" ]]; then
-	"$CDM" list-unit-files --type==service
+	"$CMD" list-unit-files --type=service
     elif [[ "$2" == "list" ]]; then
-	"$CDM" list-unit-files --type==service
+	"$CMD" list-unit-files --type=service
     elif [[ "$2" == "available" ]]; then
-	"$CDM" list-unit-files --type==service
+	"$CMD" list-unit-files --type=service
     elif [[ "$2" == "--add" ]]; then
-	"$CDM" daemon-reload
+	"$CMD" daemon-reload
     elif [[ "$2" == "add" ]]; then
-	"$CDM" daemon-reload
+	"$CMD" daemon-reload
     else
 	"$CMD" "$@"
     fi
 }
 
 if [[ -e /sbin/service ]]; then
-    service "$@"
+    service_fun "$@"
 elif [[ -e /usr/bin/systemctl ]]; then
-    systemd "$@"
+  systemd_fun "$@"
 fi
 
