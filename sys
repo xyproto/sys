@@ -3,11 +3,11 @@
 # Wraps systemctl and service/chkconfig.
 # Makes them more inclined to understand what you meant.
 #
+# Alexander F Rødseth <xyproto@archlinux.org>
 # GPL2
-# ALexander Rødseth
-# 2013
 #
 # TODO: Use case/esac instead of if/elif/else
+#
 
 USER=$(whoami)
 
