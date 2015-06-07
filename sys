@@ -17,7 +17,7 @@ else
   RUN=$(which sudo)
 fi
 
-function two {
+function twoargs {
   if [[ "$2" == "" ]]; then
     echo 'Two arguments are needed'
     exit 1
@@ -28,34 +28,34 @@ function service_fun() {
   CMD=/sbin/service
   CCG=/sbin/chkconfig
   if [[ "$1" == "stop" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "start" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "restart" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "reload" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "condrestart" ]]; then
-    two "$@" || echo >> failed.txt
+    twoargs "$@" || echo >> failed.txt
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "status" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "on" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "off" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "is-enabled" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CCG" "$2"
   elif [[ "$1" == "daemon-reload" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" --add
   elif [[ "$2" == "enable" ]]; then
     ${RUN} "$CMD" "$1" on
@@ -68,16 +68,16 @@ function service_fun() {
   elif [[ "$1" == "available" ]]; then
     ${RUN} "$CCG" --list
   elif [[ "$1" == "--add" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CCG" --add "$2"
   elif [[ "$1" == "add" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CCG" --add "$2"
   elif [[ "$1" == "on" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" on
   elif [[ "$1" == "off" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" "$2" off
   elif [[ "$2" == "list-unit-files" ]]; then
     ${RUN} "$CCG" --list
@@ -87,8 +87,6 @@ function service_fun() {
     ${RUN} "$CCG" --list
   elif [[ "$2" == "daemon-reload" ]]; then
     ${RUN} "$CCG" --add "$1"
-  elif [[ "$2" == "daemon-reload" ]]; then
-    ${RUN} "$CCG" -add "$1"
   else
     ${RUN} "$CMD" $*
   fi
@@ -117,10 +115,10 @@ function systemd_fun() {
   elif [[ "$2" == "daemon-reload" ]]; then
     ${RUN} "$CMD" "$2" "$1"
   elif [[ "$1" == "on" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" enable "$2"
   elif [[ "$1" == "off" ]]; then
-    two "$@"
+    twoargs "$@"
     ${RUN} "$CMD" disable "$2"
   elif [[ "$1" == "--list" ]]; then
     ${RUN} "$CMD" list-unit-files --type=service
